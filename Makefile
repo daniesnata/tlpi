@@ -8,7 +8,7 @@ LIB=lib/tlpi_hdr.h \
 	lib/ename.c \
 	lib/error_functions.h lib/error_functions.c
 
-all: copy seek t_getopt bad_exclusive_open ex-tee
+all: copy seek t_getopt bad_exclusive_open t_readv ex-tee
 
 copy: error_functions.o
 	${CC} ${BUILD} bin/error_functions.o fileio/copy.c -o bin/copy
@@ -27,6 +27,9 @@ get_num.o:
 
 bad_exclusive_open:
 	${CC} ${BUILD} fileio/bad_exclusive_open.c -o bin/bad_exclusive_open
+
+t_readv: error_functions.o
+	${CC} ${BUILD} bin/error_functions.o fileio/t_readv.c -o bin/t_readv
 
 ex-tee:
 	${CC} ${BUILD} exercises/tee.c -o bin/ex/tee
