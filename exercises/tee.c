@@ -57,4 +57,6 @@ int main ( int argc, char * argv[] )
     while ((rsz = read(STDIN_FILENO, buf, sizeof(buf))) > 0 ) {
         write(STDOUT_FILENO, buf, rsz);
     }
+
+    exit(EXIT_SUCCESS);
 }
