@@ -8,7 +8,7 @@ LIB=lib/tlpi_hdr.h \
 	lib/ename.c \
 	lib/error_functions.h lib/error_functions.c
 
-all: copy seek t_getopt
+all: copy seek t_getopt ex-tee
 
 copy: error_functions.o
 	${CC} ${BUILD} bin/error_functions.o fileio/copy.c -o bin/copy
@@ -25,6 +25,9 @@ error_functions.o:
 get_num.o:
 	${CC} ${BUILD} lib/get_num.c -o bin/get_num.o -c
 
+ex-tee:
+	${CC} ${BUILD} exercises/tee.c -o bin/ex/tee
+
 .PHONY: clean
 clean:
-	rm bin/**
+	rm bin/** bin/ex/**
