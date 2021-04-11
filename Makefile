@@ -2,13 +2,14 @@ CC=clang
 CSTD=-std=c99
 PORT=-D_XOPEN_SOURCE=600
 BUILD=${CSTD} ${PORT} -Wall -Wextra -g -O0
+BUILD_LFS=${CSTD} ${PORT} -D_FILE_OFFSET_BITS=64 -Wall -Wextra -g -O0
 
 LIB=lib/tlpi_hdr.h \
 	lib/get_num.h lib/get_num.c \
 	lib/ename.c \
 	lib/error_functions.h lib/error_functions.c
 
-all: copy seek t_getopt bad_exclusive_open t_readv ex-tee
+all: copy seek t_getopt bad_exclusive_open t_readv ex-tee ex-large_file
 
 copy: error_functions.o
 	${CC} ${BUILD} bin/error_functions.o fileio/copy.c -o bin/copy
@@ -22,6 +23,9 @@ t_getopt: error_functions.o
 error_functions.o:
 	${CC} ${BUILD} lib/error_functions.c -o bin/error_functions.o -c
 
+error_functions_lfs.o:
+	${CC} ${BUILD_LFS} lib/error_functions.c -o bin/error_functions_lfs.o -c
+
 get_num.o:
 	${CC} ${BUILD} lib/get_num.c -o bin/get_num.o -c
 
@@ -33,6 +37,9 @@ t_readv: error_functions.o
 
 ex-tee:
 	${CC} ${BUILD} exercises/tee.c -o bin/ex/tee
+
+ex-large_file: error_functions_lfs.o
+	${CC} ${BUILD_LFS} bin/error_functions_lfs.o exercises/large_file.c -o bin/ex/largefile
 
 .PHONY: clean
 clean:
