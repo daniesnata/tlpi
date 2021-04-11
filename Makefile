@@ -9,7 +9,7 @@ LIB=lib/tlpi_hdr.h \
 	lib/ename.c \
 	lib/error_functions.h lib/error_functions.c
 
-all: copy seek t_getopt bad_exclusive_open t_readv ex-tee ex-large_file
+all: copy seek t_getopt bad_exclusive_open t_readv ex-tee ex-large_file ex-5.2
 
 copy: error_functions.o
 	${CC} ${BUILD} bin/error_functions.o fileio/copy.c -o bin/copy
@@ -40,6 +40,9 @@ ex-tee:
 
 ex-large_file: error_functions_lfs.o
 	${CC} ${BUILD_LFS} bin/error_functions_lfs.o exercises/large_file.c -o bin/ex/largefile
+
+ex-5.2: error_functions.o
+	${CC} ${BUILD} lib/error_functions.c exercises/ex_5_2.c -o bin/ex/ex_5_2
 
 .PHONY: clean
 clean:
